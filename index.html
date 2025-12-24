@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>JattJusti SMP</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    font-family:Poppins,sans-serif;
+    background:#050814;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* BACKGROUND FLOAT */
+.bg span{
+    position:fixed;
+    width:20px;
+    height:20px;
+    background:rgba(0,255,255,.15);
+    box-shadow:0 0 20px rgba(0,255,255,.6);
+    border-radius:50%;
+    animation:float 20s linear infinite;
+}
+.bg span:nth-child(1){left:10%}
+.bg span:nth-child(2){left:30%;animation-duration:24s}
+.bg span:nth-child(3){left:50%;animation-duration:20s}
+.bg span:nth-child(4){left:70%;animation-duration:26s}
+.bg span:nth-child(5){left:90%;animation-duration:22s}
+
+@keyframes float{
+    from{bottom:-50px;opacity:0}
+    50%{opacity:1}
+    to{bottom:110%;opacity:0}
+}
+
+/* HEADER */
+header{
+    text-align:center;
+    padding:90px 20px;
+}
+
+.rgb{
+    font-size:3.3em;
+    font-weight:700;
+    background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,violet);
+    background-size:400%;
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    animation:rgb 6s linear infinite;
+}
+@keyframes rgb{
+    0%{background-position:0%}
+    100%{background-position:400%}
+}
+
+/* NAV */
+nav{
+    display:flex;
+    justify-content:center;
+    gap:28px;
+    background:#0a0f22;
+    padding:16px;
+    position:sticky;
+    top:0;
+    z-index:10;
+}
+nav a{
+    color:#00ffee;
+    text-decoration:none;
+    font-weight:500;
+}
+nav a:hover{
+    color:white;
+    text-shadow:0 0 12px #00ffee;
+}
+
+/* SECTIONS */
+section{
+    max-width:1000px;
+    margin:auto;
+    padding:70px 20px;
+    opacity:0;
+    transform:translateY(40px);
+    transition:1s;
+}
+section.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.card{
+    background:#0f1633;
+    border-radius:18px;
+    padding:32px;
+    margin-bottom:35px;
+    box-shadow:0 0 30px rgba(0,255,255,.15);
+    transition:.4s;
+}
+.card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 0 45px rgba(0,255,255,.35);
+}
+
+/* STATUS */
+.online{
+    color:#00ff66;
+    font-weight:bold;
+}
+
+/* PLAYER LIST */
+.player-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-top:18px;
+}
+.player{
+    background:#050814;
+    padding:10px 18px;
+    border-radius:25px;
+    box-shadow:0 0 15px rgba(0,255,255,.25);
+    animation:pop .6s ease;
+}
+@keyframes pop{
+    from{opacity:0;transform:scale(.5)}
+    to{opacity:1;transform:scale(1)}
+}
+
+/* BUTTON */
+.btn{
+    padding:14px 34px;
+    border-radius:50px;
+    border:none;
+    background:linear-gradient(90deg,#00ffee,#00ff88);
+    font-weight:bold;
+    cursor:pointer;
+}
+.btn:hover{
+    transform:scale(1.1);
+}
+
+/* FOOTER */
+footer{
+    text-align:center;
+    padding:22px;
+    background:#040714;
+    font-size:.9em;
+}
+footer span{
+    color:#00ffee;
+    font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg">
+    <span></span><span></span><span></span><span></span><span></span>
+</div>
+
+<header>
+    <div class="rgb">🔥 JattJusti SMP 🔥</div>
+    <p>Survival • PvP • Events • 24/7</p>
+    <a href="#join"><button class="btn">Join Server</button></a>
+</header>
+
+<nav>
+    <a href="#about">About</a>
+    <a href="#status">Status</a>
+    <a href="#players">Players</a>
+    <a href="#join">Join</a>
+</nav>
+
+<section id="about">
+<div class="card">
+<h2>🌍 About Server</h2>
+<p>
+JattJusti SMP is a lag-free survival server with active admins
+and smooth gameplay.
+</p>
+</div>
+</section>
+
+<section id="status">
+<div class="card">
+<h2>📡 Server Status</h2>
+<p>Status: <span class="online">Online ✔ (24/7)</span></p>
+<p>Players Online: <b>15</b></p>
+</div>
+</section>
+
+<section id="players">
+<div class="card">
+<h2>🧑‍🤝‍🧑 Online Players</h2>
+<div id="playerList" class="player-list"></div>
+</div>
+</section>
+
+<section id="join">
+<div class="card">
+<h2>🎮 Join Now</h2>
+<p><b>IP:</b> play.jattjusti.in</p>
+<p>Version: <b>1.21.x</b></p>
+</div>
+</section>
+
+<footer>
+© 2025 JattJusti SMP • <span>Created by AK (ADMIN)</span>
+</footer>
+
+<script>
+/* FIXED PLAYER LIST (15 PLAYERS) */
+const players = [
+    "AK",
+    "SternRabbit",
+    "Dark",
+    "JustPlayYT",
+    "ItzDragon",
+    "Amanop2",
+    "Zei",
+    "Dhruv__OG",
+    "SylexJr",
+    "PCGPRINCE_YT",
+    "AviXRishu",
+    "GobhiLikesYou",
+    "DJGaMer23",
+    "SB_Boy",
+    "Smart_boy3579"
+];
+
+const playerList = document.getElementById("playerList");
+players.forEach(p=>{
+    const div=document.createElement("div");
+    div.className="player";
+    div.innerText=p;
+    playerList.appendChild(div);
+});
+
+/* SCROLL ANIMATION */
+const sections=document.querySelectorAll("section");
+window.addEventListener("scroll",()=>{
+    sections.forEach(sec=>{
+        if(sec.getBoundingClientRect().top < window.innerHeight - 120){
+            sec.classList.add("show");
+        }
+    });
+});
+</script>
+
+</body>
+</html>
