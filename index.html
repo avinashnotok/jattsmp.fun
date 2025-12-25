@@ -4,46 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JATT JUSTI SMP - Minecraft Server</title>
-    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
-            padding: 0;
+            padding: 0 0 80px 0;
             color: #fff;
             overflow-x: hidden;
             position: relative;
-            height: 100vh;
-            background: linear-gradient(to bottom, #87CEEB 0%, #87CEEB 70%, #228B22 70%, #228B22 100%);
+            min-height: 100vh;
+            background: linear-gradient(to bottom, #87CEEB 0%, #87CEEB 50%, #FF0000 50%, #FF0000 100%);
         }
 
         header {
-            background-color: rgba(0, 100, 0, 0.85);
+            background-color: rgba(139, 0, 0, 0.85);
             backdrop-filter: blur(8px);
             color: white;
             padding: 50px 20px;
             text-align: center;
             text-shadow: 0 0 15px #000, 3px 3px 0 #000;
             box-shadow: 0 8px 32px rgba(0,0,0,0.6);
-            border-bottom: 5px solid #4CAF50;
+            border-bottom: 5px solid #FF4500;
             animation: headerGlow 4s ease-in-out infinite alternate;
         }
         @keyframes headerGlow {
             from { box-shadow: 0 8px 32px rgba(0,0,0,0.6); }
-            to { box-shadow: 0 8px 50px rgba(76, 175, 80, 0.8); }
+            to { box-shadow: 0 8px 50px rgba(255, 69, 0, 0.8); }
         }
         header h1 {
             font-family: 'Press Start 2P', cursive;
             font-size: 4em;
             margin: 0;
-            text-shadow: 0 0 20px #4CAF50;
+            text-shadow: 0 0 20px #FF4500;
             animation: textPulse 3s infinite;
         }
         @keyframes textPulse {
-            0% { text-shadow: 0 0 20px #4CAF50; }
-            50% { text-shadow: 0 0 40px #4CAF50, 0 0 60px #4CAF50; }
-            100% { text-shadow: 0 0 20px #4CAF50; }
+            0% { text-shadow: 0 0 20px #FF4500; }
+            50% { text-shadow: 0 0 40px #FF4500, 0 0 60px #FF4500; }
+            100% { text-shadow: 0 0 20px #FF4500; }
         }
 
         .content {
@@ -66,7 +65,7 @@
             border-radius: 20px;
             padding: 40px;
             box-shadow: 0 12px 40px rgba(0,0,0,0.5);
-            border: 2px solid rgba(76, 175, 80, 0.4);
+            border: 2px solid rgba(255, 69, 0, 0.4);
             transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
@@ -78,7 +77,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(76,175,80,0.1), transparent);
+            background: linear-gradient(45deg, transparent, rgba(255,69,0,0.1), transparent);
             transform: rotate(30deg);
             transition: all 0.6s;
             opacity: 0;
@@ -89,17 +88,27 @@
         }
         .card:hover {
             transform: translateY(-15px) scale(1.02);
-            box-shadow: 0 20px 60px rgba(76,175,80,0.6);
-            border-color: #4CAF50;
+            box-shadow: 0 20px 60px rgba(255,69,0,0.6);
+            border-color: #FF4500;
         }
 
         h2 {
             font-family: 'Press Start 2P', cursive;
             text-align: center;
-            color: #4CAF50;
+            color: #FF4500;
             text-shadow: 3px 3px 0 #000;
             margin-top: 0;
             font-size: 1.8em;
+        }
+
+        /* About section: vibrant hot pink text, bold */
+        #about-card p {
+            color: #FF1493; /* Deep hot pink - vibrant and visible */
+            font-weight: bold;
+            font-size: 1.2em;
+            line-height: 1.7;
+            text-align: center;
+            text-shadow: 1px 1px 3px #000; /* Slight shadow for better readability on red background */
         }
 
         #ip-container {
@@ -113,11 +122,11 @@
             padding: 20px 40px;
             border-radius: 15px;
             display: inline-block;
-            border: 3px solid #4CAF50;
-            box-shadow: 0 0 20px rgba(76,175,80,0.5);
+            border: 3px solid #FF4500;
+            box-shadow: 0 0 20px rgba(255,69,0,0.5);
         }
         #copy-btn {
-            background: linear-gradient(to bottom, #4CAF50, #388E3C);
+            background: linear-gradient(to bottom, #FF4500, #FF0000);
             color: white;
             border: none;
             padding: 18px 40px;
@@ -126,16 +135,16 @@
             font-size: 1.5em;
             margin-top: 20px;
             transition: all 0.3s;
-            box-shadow: 0 8px #388E3C;
+            box-shadow: 0 8px #FF0000;
             font-family: 'Press Start 2P', cursive;
         }
         #copy-btn:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px #388E3C, 0 0 20px rgba(76,175,80,0.8);
+            box-shadow: 0 15px #FF0000, 0 0 20px rgba(255,69,0,0.8);
         }
         #copy-btn:active {
             transform: translateY(3px);
-            box-shadow: 0 4px #388E3C;
+            box-shadow: 0 4px #FF0000;
         }
 
         ul {
@@ -155,13 +164,13 @@
             content: '▸';
             position: absolute;
             left: 15px;
-            color: #4CAF50;
+            color: #FF4500;
             font-size: 1.4em;
         }
         li:hover {
             transform: translateX(10px);
-            background: rgba(76,175,80,0.3);
-            box-shadow: 0 0 15px rgba(76,175,80,0.5);
+            background: rgba(255,69,0,0.3);
+            box-shadow: 0 0 15px rgba(255,69,0,0.5);
         }
 
         #status p {
@@ -171,8 +180,28 @@
             padding: 18px;
             border-radius: 15px;
             margin: 20px 0;
-            border: 2px solid #4CAF50;
+            border: 2px solid #FF4500;
             box-shadow: 0 0 15px rgba(0,0,0,0.4);
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            color: #fff;
+            text-align: center;
+            padding: 15px 0;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.9em;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+        footer span {
+            color: #FF4500;
+            text-shadow: 0 0 10px #FF4500;
         }
 
         @media (max-width: 900px) {
@@ -193,7 +222,7 @@
     </header>
 
     <div class="content">
-        <div class="card">
+        <div class="card" id="about-card">
             <h2>About the Server</h2>
             <p>JATT JUSTI SMP is a fun and friendly Minecraft Survival Multiplayer server where players can build, explore, and collaborate. As an admin-managed server, we ensure a safe and enjoyable environment for all ages.</p>
             <p>Join us for adventures, events, and community building!</p>
@@ -225,6 +254,10 @@
             </div>
         </div>
     </div>
+
+    <footer>
+        Created by <span>AK ADMIN</span>
+    </footer>
 
     <audio id="click-sound" src="https://cdn.discordapp.com/attachments/297465217173438464/819941749927018516/minecraft_click.mp3"></audio>
 
