@@ -103,12 +103,12 @@
 
         /* About section: vibrant hot pink text, bold */
         #about-card p {
-            color: #FF1493; /* Deep hot pink - vibrant and visible */
+            color: #FF1493; /* Deep hot pink */
             font-weight: bold;
             font-size: 1.2em;
             line-height: 1.7;
             text-align: center;
-            text-shadow: 1px 1px 3px #000; /* Slight shadow for better readability on red background */
+            text-shadow: 1px 1px 3px #000;
         }
 
         #ip-container {
@@ -229,7 +229,7 @@
 
             <div id="ip-container">
                 <div id="ip">Server IP: play.jattsmp.fun</div>
-                <button id="copy-btn" onclick="copyIP(); playSound()">Copy IP</button>
+                <button id="copy-btn">Copy IP</button>
             </div>
         </div>
 
@@ -262,12 +262,44 @@
     <audio id="click-sound" src="https://cdn.discordapp.com/attachments/297465217173438464/819941749927018516/minecraft_click.mp3"></audio>
 
     <script>
+        // Minecraft click sound
         function playSound() {
             const sound = document.getElementById('click-sound');
             sound.currentTime = 0;
-            sound.play();
+            sound.play().catch(() => {}); // Prevent error if autoplay blocked
         }
 
+        // Fixed Copy IP function with better fallback
+        document.getElementById('copy-btn').addEventListener('click', async () => {
+            const ipText = 'play.jattsmp.fun';
+            
+            try {
+                await navigator.clipboard.writeText(ipText);
+                alert('IP copied to clipboard: ' + ipText);
+                playSound();
+            } catch (err) {
+                // Fallback for older browsers or if clipboard API fails
+                const textArea = document.createElement('textarea');
+                textArea.value = ipText;
+                textArea.style.position = 'fixed';
+                textArea.style.opacity = '0';
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                
+                try {
+                    document.execCommand('copy');
+                    alert('IP copied to clipboard: ' + ipText);
+                    playSound();
+                } catch (fallbackErr) {
+                    alert('Copy failed. Please copy manually: ' + ipText);
+                }
+                
+                document.body.removeChild(textArea);
+            }
+        });
+
+        // Server status fetch
         async function fetchStatus() {
             try {
                 const response = await fetch('https://api.mcsrvstat.us/3/play.jattsmp.fun');
@@ -281,14 +313,6 @@
                 document.getElementById('player-count').textContent = 'Players Online: N/A';
                 document.getElementById('version').textContent = 'Version: N/A';
             }
-        }
-
-        function copyIP() {
-            const ipText = 'play.jattsmp.fun';
-            navigator.clipboard.writeText(ipText).then(() => {
-                alert('IP copied to clipboard!');
-                playSound();
-            });
         }
 
         window.onload = function() {
