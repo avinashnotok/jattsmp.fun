@@ -101,9 +101,9 @@
             font-size: 1.8em;
         }
 
-        /* About section: vibrant hot pink text, bold */
+        /* About text - vibrant hot pink */
         #about-card p {
-            color: #FF1493; /* Deep hot pink */
+            color: #FF1493;
             font-weight: bold;
             font-size: 1.2em;
             line-height: 1.7;
@@ -111,40 +111,55 @@
             text-shadow: 1px 1px 3px #000;
         }
 
-        #ip-container {
+        /* IP Section - Java on top, Bedrock below */
+        .ip-section {
             text-align: center;
             margin: 40px 0;
         }
-        #ip {
-            font-weight: bold;
-            font-size: 2em;
+        .ip-box {
             background: rgba(0,0,0,0.6);
-            padding: 20px 40px;
+            padding: 25px;
             border-radius: 15px;
-            display: inline-block;
+            margin: 20px 0;
             border: 3px solid #FF4500;
             box-shadow: 0 0 20px rgba(255,69,0,0.5);
         }
-        #copy-btn {
+        .ip-label {
+            font-size: 1.6em;
+            margin-bottom: 15px;
+            font-family: 'Press Start 2P', cursive;
+            color: #FF4500;
+        }
+        .ip-value {
+            font-size: 2em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .port-value {
+            font-size: 1.6em;
+            margin-top: 10px;
+            color: #FF1493;
+        }
+        .copy-btn {
             background: linear-gradient(to bottom, #FF4500, #FF0000);
             color: white;
             border: none;
-            padding: 18px 40px;
+            padding: 14px 30px;
             cursor: pointer;
-            border-radius: 15px;
-            font-size: 1.5em;
-            margin-top: 20px;
+            border-radius: 12px;
+            font-size: 1.3em;
+            margin: 10px 8px;
             transition: all 0.3s;
-            box-shadow: 0 8px #FF0000;
+            box-shadow: 0 6px #FF0000;
             font-family: 'Press Start 2P', cursive;
         }
-        #copy-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px #FF0000, 0 0 20px rgba(255,69,0,0.8);
+        .copy-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px #FF0000, 0 0 20px rgba(255,69,0,0.8);
         }
-        #copy-btn:active {
-            transform: translateY(3px);
-            box-shadow: 0 4px #FF0000;
+        .copy-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 3px #FF0000;
         }
 
         ul {
@@ -227,9 +242,25 @@
             <p>JATT JUSTI SMP is a fun and friendly Minecraft Survival Multiplayer server where players can build, explore, and collaborate. As an admin-managed server, we ensure a safe and enjoyable environment for all ages.</p>
             <p>Join us for adventures, events, and community building!</p>
 
-            <div id="ip-container">
-                <div id="ip">Server IP: play.jattsmp.fun</div>
-                <button id="copy-btn">Copy IP</button>
+            <!-- IP Section: Java on top, Bedrock below -->
+            <div class="ip-section">
+                <h3 style="text-align:center; color:#FF4500; margin-bottom:30px;">Connect to the Server</h3>
+
+                <!-- Java Edition (Top) -->
+                <div class="ip-box">
+                    <div class="ip-label">Java Edition (PC)</div>
+                    <div class="ip-value">play.jattsmp.fun</div>
+                    <button class="copy-btn" data-ip="play.jattsmp.fun">Copy Java IP</button>
+                </div>
+
+                <!-- Bedrock / Pocket Edition (Bottom) -->
+                <div class="ip-box">
+                    <div class="ip-label">Bedrock / Pocket Edition (Mobile, Console, Win10)</div>
+                    <div class="ip-value">play.jattsmp.fun</div>
+                    <div class="port-value">Port: 19132</div>
+                    <button class="copy-btn" data-ip="play.jattsmp.fun">Copy IP</button>
+                    <button class="copy-btn" data-ip="19132">Copy Port</button>
+                </div>
             </div>
         </div>
 
@@ -262,41 +293,41 @@
     <audio id="click-sound" src="https://cdn.discordapp.com/attachments/297465217173438464/819941749927018516/minecraft_click.mp3"></audio>
 
     <script>
-        // Minecraft click sound
+        // Play Minecraft click sound
         function playSound() {
             const sound = document.getElementById('click-sound');
             sound.currentTime = 0;
-            sound.play().catch(() => {}); // Prevent error if autoplay blocked
+            sound.play().catch(() => {});
         }
 
-        // Fixed Copy IP function with better fallback
-        document.getElementById('copy-btn').addEventListener('click', async () => {
-            const ipText = 'play.jattsmp.fun';
-            
-            try {
-                await navigator.clipboard.writeText(ipText);
-                alert('IP copied to clipboard: ' + ipText);
-                playSound();
-            } catch (err) {
-                // Fallback for older browsers or if clipboard API fails
-                const textArea = document.createElement('textarea');
-                textArea.value = ipText;
-                textArea.style.position = 'fixed';
-                textArea.style.opacity = '0';
-                document.body.appendChild(textArea);
-                textArea.focus();
-                textArea.select();
-                
+        // Copy buttons
+        document.querySelectorAll('.copy-btn').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const ipText = btn.getAttribute('data-ip');
+
                 try {
-                    document.execCommand('copy');
-                    alert('IP copied to clipboard: ' + ipText);
+                    await navigator.clipboard.writeText(ipText);
+                    alert(`Copied: ${ipText}`);
                     playSound();
-                } catch (fallbackErr) {
-                    alert('Copy failed. Please copy manually: ' + ipText);
+                } catch (err) {
+                    const textArea = document.createElement('textarea');
+                    textArea.value = ipText;
+                    textArea.style.position = 'fixed';
+                    textArea.style.opacity = '0';
+                    document.body.appendChild(textArea);
+                    textArea.focus();
+                    textArea.select();
+
+                    try {
+                        document.execCommand('copy');
+                        alert(`Copied: ${ipText}`);
+                        playSound();
+                    } catch (fallbackErr) {
+                        alert(`Copy failed. Please copy manually: ${ipText}`);
+                    }
+                    document.body.removeChild(textArea);
                 }
-                
-                document.body.removeChild(textArea);
-            }
+            });
         });
 
         // Server status fetch
